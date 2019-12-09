@@ -1,7 +1,7 @@
 def valid?(password)
-  pairs = password.to_s.chars[0..-2].zip(password.to_s.chars[1..-1])
-  pairs.all? { |pair| pair.first <= pair.last } &&
-    pairs.any? { |pair| pair.first == pair.last }
+  password = password.to_s.chars
+  password.chunk_while { |a, b| a <= b }.to_a.size == 1 &&
+    password.chunk_while { |a, b| a == b }.any? { |chunk| chunk.size >= 2 }
 end
 
 p (272_091..815_432).select { |i| valid?(i) }.size
